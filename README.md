@@ -1,5 +1,5 @@
-## Projekt na Metody i Algorytmy Podejmowania Decyzji
-# Metoda optymalizacji - GSM
+# Projekt na Metody i Algorytmy Podejmowania Decyzji
+## Metoda optymalizacji - GSM
 
-# Baza danych
+## Baza danych
 Tabela 1 - Nazwa obiektu, Atrybuty...
