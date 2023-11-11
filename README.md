@@ -1,18 +1,16 @@
 # Projekt na Metody i Algorytmy Podejmowania Decyzji
-## Metoda optymalizacji - GSM
+### Metoda optymalizacji - GSM
 
-## Baza danych
-Tabela 1 - Nazwa obiektu, Atrybuty...
 
 
 ## Instrukcja
-# Instalacja pakietów *pip install*
+### Instalacja pakietów *pip install*
 - Django
 - djangorestframework
 - django-rest-swagger
 - drf-yasg
 
-# Obsługa
+### Obsługa
 - Tabele:
 python manage.py makemigrations
 python manage.py migrate
