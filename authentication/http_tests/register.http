@@ -1,0 +1,11 @@
+POST http://localhost:8000/auth/register/
+Content-Type: application/json
+
+{
+  "username": "test",
+  "email": "test@test.com",
+  "password": "zaq1@WSX",
+  "password2": "zaq1@WSX",
+  "first_name": "Pan",
+  "last_name": "Testowy"
+}
