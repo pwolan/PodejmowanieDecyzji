@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+  <h2>Decision Scenarios</h2>
+    <ul>
+        {% for scenario in object_list %}
+            <li>{{ scenario }}</li>
+        {% endfor %}
+    </ul>
+{%endblock content%}

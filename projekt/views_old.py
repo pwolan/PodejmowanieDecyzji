@@ -3,34 +3,20 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import status
-from .models.models import *
-from .models.weights import *
-from .models.matrices import *
-from .models.decisionScenarios import *
-from .serializers import*
+# from .models.models import *
+# from .models.weights import *
+# from .models.matrices import *
+# from .models.decisionScenarios import *
+# from .serializers import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django import forms
-from django.views.generic.edit import  FormView
+
 # Create your views here.
 @login_required
 def index(request):
     return render(request, "projekt/index.html")
-class ScenarioForm(forms.Form):
-    modelID = forms.IntegerField()
-    dataID = forms.IntegerField()
-    weightID = forms.IntegerField()
-
-
-class ScenarioFormView(FormView):
-    template_name = "projekt/scenario_form.html"
-    form_class = ScenarioForm
-    success_url = "/"
-
-
-
 
 
 

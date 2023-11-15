@@ -1,5 +1,16 @@
 {%extends 'base.html'%}
 
 {%block content%}
-Index page. Hello USER
+
+    Witaj! <b>{{  user.username }}</b><br/>
+    Jesteś w grupach:
+    <ul>
+        {% for group in groupnames %}
+            <li>
+                 {{ group }}
+            </li>
+        {% endfor %}
+    </ul>
+
+
 {%endblock content%}
