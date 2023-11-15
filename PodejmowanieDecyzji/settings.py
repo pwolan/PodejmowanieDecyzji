@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'projekt.apps.ProjektConfig',
-    'authentication.apps.AuthConfig',
+    # 'authentication.apps.AuthConfig',
     'rest_framework_swagger',       # Swagger
-    'rest_framework',               # Django rest framework
+    # 'rest_framework',               # Django rest framework
     'drf_yasg',                      # Yet Another Swagger generator
-    'rest_framework_simplejwt',      # Authentication
+    # 'rest_framework_simplejwt',      # Authentication
 ]
 
 MIDDLEWARE = [

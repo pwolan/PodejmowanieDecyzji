@@ -1,0 +1,8 @@
+POST http://localhost:8000/decision_scenario
+Content-Type: application/json
+
+{
+  "criteria": [
+
+  ]
+}
