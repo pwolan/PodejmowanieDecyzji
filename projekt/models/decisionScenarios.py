@@ -5,6 +5,6 @@ from .matrices import Data
 
 
 class DecisionScenarios(m.Model):
-    modelID = m.ForeignKey(Models, on_delete=m.CASCADE)
-    dataID = m.ForeignKey(Data, on_delete=m.CASCADE)
-    weightID = m.ForeignKey(Weights, on_delete=m.CASCADE)
+    modelID = m.ForeignKey(Models, on_delete=m.CASCADE, null=True, blank=True)
+    dataID = m.ForeignKey(Data, on_delete=m.CASCADE, null=True, blank=True)
+    weightID = m.ForeignKey(Weights, on_delete=m.CASCADE, null=True, blank=True)
