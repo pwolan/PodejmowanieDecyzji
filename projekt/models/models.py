@@ -6,7 +6,7 @@ class Models(models.Model):
     aggregation_method = models.CharField(max_length=4)
     completness_required = models.BooleanField()
 
-
+# TODO to w sumie może być po prostu user, on też ma name i address email
 class Experts(models.Model):
     name = models.IntegerField()
     address = models.CharField(max_length=100)

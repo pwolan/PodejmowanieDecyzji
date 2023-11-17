@@ -4,8 +4,8 @@
 
   <h2>Decision Scenarios</h2>
     <ul>
-        {% for scenario in object_list %}
-            <li>{{ scenario }}</li>
+        {% for scenario in scenarios %}
+            <li><a href={% url 'scenario-detail' scenario.pk %}>{{ scenario.pk }}&nbsp;{{ scenario.get_absolute_url }}</a></li>
         {% endfor %}
     </ul>
     <a href={% url 'add_scenario' %}>add scenario</a>
