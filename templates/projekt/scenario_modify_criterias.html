@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<ul class="criteria-blocks">
+    {% for criterium in criterias %}
+        <li>ID: {{criterium.criteriaID.id}}, Parent: {{ criterium.criteriaID.parent_criterion }}, Name: {{ criterium.criteriaID.name }}, Criterium: {{ criterium.criteriaID.description }}</li>
+    {% endfor %}
+</ul>
+
+
+
+<form action = "" method = "post">
+    {% csrf_token %}
+    {{form }}
+    <input type="submit" value="Submit">
+</form>
+{%endblock content%}
