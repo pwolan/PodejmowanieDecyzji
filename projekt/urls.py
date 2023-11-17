@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 # from rest_framework.routers import DefaultRouter
-from .views.facilitator_views import ScenarioView, add_scenario, ScenarioDetailView
+from .views.facilitator_views import ScenarioView, CreateScenarioView, ScenarioDetailView
 from .views import index as views
 
 # router = DefaultRouter()
@@ -22,7 +22,7 @@ new_urls = [
     path("accounts/login/", views.MyLoginView.as_view(), name="login"),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('scenarios/', ScenarioView.as_view(), name='scenarios'),
-    path('scenarios/add', add_scenario, name='add_scenario'),
+    path('scenarios/add', CreateScenarioView.as_view(), name='add_scenario'),
     path('scenarios/view/<pk>', ScenarioDetailView.as_view(), name='scenario-detail')
 ]
 urlpatterns = new_urls

@@ -7,6 +7,7 @@ from django.forms import BaseModelForm, ModelForm
 
 
 from ..models import DecisionScenarios, Models
+from ..forms.forms import ModelForms
 from django.contrib.auth.decorators import login_required
 
 # class ScenarioForm(forms.Form):
@@ -31,12 +32,13 @@ class ScenarioView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 #     return redirect('scenario-detail', scenario.pk)
 class CreateScenarioView(LoginRequiredMixin, CreateView):
     model = Models
-    fields = ['Ranking_method', 'Aggregation_method', 'Completeness_method']
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        # model = Models.objects.create(form)
-        model = form.save()
-        scenario = DecisionScenarios.objects.create(UserID = self.request.user.pk, ModelID = model.pk)
-        return HttpResponseRedirect('')
+    form_class = ModelForms
+    template_name = 'projekt/scenario_create.html'
+    def form_valid(self, form):
+        m = form.save()
+        DecisionScenarios.objects.create(userID=self.request.user.pk, ModelID=m.pk)
+        # tutaj można wykonać dodatkowe akcje po poprawnym wysłaniu formularza
+        return super().form_valid(form)
 
 class ScenarioDetailView(LoginRequiredMixin, DetailView):
     model = DecisionScenarios
