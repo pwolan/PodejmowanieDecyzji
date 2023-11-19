@@ -18,7 +18,8 @@ class ModelExperts(models.Model):
 
 
 class Criterias(models.Model):
-    parent_criterion = models.IntegerField()
+    # parent_criterion = models.IntegerField()
+    parent_criterion = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
 
