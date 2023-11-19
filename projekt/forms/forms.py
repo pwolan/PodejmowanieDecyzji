@@ -6,7 +6,7 @@ from ..models.models import Models, Criterias
 class ModelForms(forms.ModelForm):
     class Meta:
         model = Models
-        fields = ['ranking_method', 'aggregation_method', 'completness_required']
+        fields = ['ranking_method', 'aggregation_method', 'completeness_required']
 
 class CriteriasForms(forms.ModelForm):
     class Meta:

@@ -1,18 +1,14 @@
-from django.db import models
+from django.db import models as m
 from .models import Criterias
+from .decisionScenarios import DecisionScenarios
+
+class WeightsData(m.Model):
+    weightsID = m.OneToOneField(DecisionScenarios, primary_key=True, on_delete=m.CASCADE, to_field="weightID")
+    criteriaID = m.ForeignKey(Criterias, on_delete=m.CASCADE)
+    size = m.IntegerField()
 
 
-class Weights(models.Model):
-    pass
-
-class WeightsCriterias(models.Model):
-    weightID = models.ForeignKey(Weights, on_delete=models.CASCADE)
-    criteriaID = models.ForeignKey(Criterias, on_delete=models.CASCADE)
-    weightDataID = models.IntegerField(unique=True)
-    Size = models.IntegerField(default=0)
-
-
-class DataElements(models.Model):
-    weightDataID = models.ForeignKey(WeightsCriterias, on_delete=models.CASCADE, to_field="weightDataID")
-    expertlDorXValue = models.IntegerField()
-    value = models.FloatField()
+class DataElements(m.Model):
+    weightsID = m.ForeignKey(WeightsData, on_delete=m.CASCADE)
+    x = m.IntegerField()
+    value = m.FloatField()

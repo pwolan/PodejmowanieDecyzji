@@ -1,10 +1,11 @@
 from django.db import models as m
 from .models import Experts, Criterias
+from .decisionScenarios import DecisionScenarios
 
 
 class Matrices(m.Model):
-    expertID = m.ForeignKey(Experts, on_delete=m.CASCADE)
-    criteriaID = m.ForeignKey(Criterias, on_delete=m.CASCADE)
+    expertID = m.ForeignKey(Experts, on_delete=m.CASCADE, null=True)
+    criteriaID = m.ForeignKey(Criterias, on_delete=m.CASCADE, null=True)
     rowSize = m.IntegerField()
     columnSize = m.IntegerField()
 
@@ -16,12 +17,8 @@ class MatriceElements(m.Model):
     value = m.FloatField()
 
 
-class Data(m.Model):
-    pass
-
-
 class DataMatrices(m.Model):
-    dataID = m.ForeignKey(Data, on_delete=m.CASCADE)
-    MatrixID = m.ForeignKey(Matrices, on_delete=m.CASCADE)
+    dataID = m.ForeignKey(DecisionScenarios, on_delete=m.CASCADE, to_field="dataID")
+    matrixID = m.ForeignKey(Matrices, on_delete=m.CASCADE)
 
 
