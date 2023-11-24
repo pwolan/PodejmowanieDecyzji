@@ -9,6 +9,7 @@
 - djangorestframework
 - django-rest-swagger
 - drf-yasg
+- django-groupadmin-users
 
 ### Obsługa
 - Tabele:
