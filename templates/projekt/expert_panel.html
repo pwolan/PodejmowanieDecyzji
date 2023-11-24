@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div>
+    <a href={% url 'index'%}>HOME</a>
+</div>
+    Witaj! <b>{{  user.username }}</b><br/>
+    <h2>Panel Eksperta</h2>
+    <p>Twoje ankiety:</p>
+    <ul>
+    {% for scenario in scenarios %}
+    	<li>{{ scenario.id }} {% if not scenario.completed%}<a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a>{%else%}{{scenario.url}}{% endif%}</li>
+    {% endfor %}
+    
+    </ul>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Wyślij">
+</form>
+
+{%endblock content%}

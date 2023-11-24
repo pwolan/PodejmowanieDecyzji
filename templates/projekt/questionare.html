@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'expert-panel'%}>EXPERT PANEL</a>
+</div>
+    Witaj! Zapraszam do ankietki :) <3 <3 <3
+    <div style="display: grid;  grid-template-columns: repeat({{ alternatives|length }},50px);">
+        <ul>
+            {% for t in tree %}
+                <li><a href="{{t.link}}">{{t.id}}</a></li>
+            {% endfor %}
+        </ul>
+
+       
+    </div>
+
+{%endblock content%}
