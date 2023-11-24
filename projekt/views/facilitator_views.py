@@ -5,7 +5,7 @@ from django.views.generic import  DetailView, CreateView, View, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import BaseModelForm, ModelForm
 from django.urls import reverse_lazy
-
+from django.template import Library
 from ..models import DecisionScenarios, Models, Criterias, ModelCriterias
 from ..forms.forms import ModelForms, CriteriasForms
 
@@ -28,40 +28,47 @@ class CreateScenarioView(LoginRequiredMixin, CreateView):
         m = form.save()
         scenario = DecisionScenarios.objects.create(userID=self.request.user, modelID=m)
         self.scenarioID = scenario.pk
+        rootCriterion = Criterias(name="Root", description="Root Criterion")
+        rootCriterion.save()
+        modelCriteriasRoot = ModelCriterias(criteriaID=rootCriterion, modelID=m)
+        modelCriteriasRoot.save()
         return super().form_valid(form)
     def get_success_url(self):
         return reverse_lazy('scenario-detail', kwargs={'pk': self.scenarioID})
 
 
-# @register.inclusion_tag('projekt/criterium.html')
-# def criterium_tag(criterium):
-#     # TODO
-#     subcriterias = criterium.children.all()
-#     return {'children': children}
 
 class CreateCriteriaView(LoginRequiredMixin, CreateView):
     model = Criterias
     form_class = CriteriasForms
     template_name = 'projekt/scenario_modify_criterias.html'
+
+
+
     def form_valid(self, form):
         criteria = form.save()
-        model = Models.objects.get(pk=self.kwargs['pk'])
+        scenario = DecisionScenarios.objects.get(pk=self.kwargs['pk'])
+        model = scenario.modelID
         model_criterias = ModelCriterias.objects.create(modelID=model, criteriaID=criteria)
         return super().form_valid(form)
     def get_success_url(self):
         return reverse_lazy('modify-criteria', kwargs={'pk': self.kwargs['pk']})
+
+    def get_form_kwargs(self, *args, **kwargs):
+        form_kwargs = super(CreateCriteriaView, self).get_form_kwargs(*args,**kwargs)
+        scenario = DecisionScenarios.objects.get(pk=self.kwargs['pk'])
+        model = scenario.modelID
+        form_kwargs['form_q'] = Criterias.objects.filter(modelcriterias__modelID=model)
+        return form_kwargs
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        model = Models.objects.get(pk=self.kwargs['pk'])
-        my_objects = ModelCriterias.objects.filter(modelID=model)
-        lista = dict()
-        for obj in my_objects:
-            key = obj.criteriaID.parent_criterion
-            if key not in lista:
-                lista[obj.criteriaID.parent_criterion] = []
-            lista[obj.criteriaID.parent_criterion].append(obj.criteriaID.id)
-        context['criterias'] = my_objects
-        context['lista'] = lista
+
+        scenario = DecisionScenarios.objects.get(pk=self.kwargs['pk'])
+        model = scenario.modelID
+        print(model.pk)
+        my_objects = ModelCriterias.objects.filter(modelID=model.pk)
+        rootCriterion = my_objects.filter(criteriaID__parent_criterion__isnull=True).first()
+        context['criterias'] = rootCriterion.criteriaID
         return context
 
 class ScenarioDetailView(LoginRequiredMixin, DetailView):

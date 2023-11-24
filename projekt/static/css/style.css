@@ -360,3 +360,11 @@ textarea {
     align-self: center;
   }
 }
+
+
+.criteria-block{
+  margin-left: 20px;
+  border: 1px solid black;
+  padding: 5px 10px;
+  display: inline-block;
+}

@@ -1,13 +1,9 @@
 {%extends 'base.html'%}
+{% load criterium_tag %}
 
 {%block content%}
-<ul class="criteria-blocks">
-    {% for criterium in criterias %}
-        <li>ID: {{criterium.criteriaID.id}}, Parent: {{ criterium.criteriaID.parent_criterion }}, Name: {{ criterium.criteriaID.name }}, Criterium: {{ criterium.criteriaID.description }}</li>
-    {% endfor %}
-</ul>
 
-
+{% criterium_tag criterias %}
 
 <form action = "" method = "post">
     {% csrf_token %}
