@@ -43,7 +43,7 @@ class ModelExperts(m.Model):
 
 
 class Criterias(m.Model):
-    parent_criterion = m.IntegerField()
+    parent_criterion = m.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=m.CASCADE)
     name = m.CharField(max_length=50)
     description = m.CharField(max_length=100)
 
