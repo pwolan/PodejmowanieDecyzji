@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+   <h2> Alternatives!</h2>
+    <ul style="font-size: 20px; margin: 20px 20px">
+        {% for alternative in alternatives %}
+            <li>{{ alternative.pk }}-{{ alternative.name }}&nbsp;</li>
+        {% endfor %}
+    </ul>
+<form action = "" method = "post">
+    {% csrf_token %}
+    {{form }}
+    <input type="submit" value="Submit">
+</form>
+{%endblock content%}
