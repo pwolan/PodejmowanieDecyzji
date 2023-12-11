@@ -8,10 +8,17 @@
     <li>ModelID:{{ object.modelID }}</li>
     <li>WeightID:{{ object.weightID }}</li>
 </ul>
-<ol>
-    <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
-    <li>Dodawanie elementów do porówania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
-    <li>Dodanie ekspertów <a href="">Dodaj ekspertów</a></li>
-</ol>
+
+    {% if object.submited %}
+        <div>Scenariusz został zatwierdzony! Kod:
+           <span style="color: red;">{{ link }}</span>
+        </div>
+    {% else%}
+        <ol>
+            <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
+            <li>Dodawanie elementów do porówania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
+            <li>Zatwierdź scenariusz <a href={% url 'scenario-submit' object.id%}>Zatwierdź</a></li>
+        </ol>
+    {% endif %}
 
 {%endblock content%}

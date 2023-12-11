@@ -2,6 +2,8 @@ from django import forms
 
 from ..models.models import Models, Criterias, Alternatives
 from ..models.models import Models, ModelCriterias
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class ModelForms(forms.ModelForm):
@@ -24,3 +26,13 @@ class AlternativesForm(forms.ModelForm):
     class Meta:
         model = Alternatives
         fields = ["name", "description"]
+
+class SubmitScenarioForm(forms.Form):
+    password = forms.CharField(label="Password (If not set, password not used)", required=False)
+
+
+class RegisterUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "password1", "password2")
+

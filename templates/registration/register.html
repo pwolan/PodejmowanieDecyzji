@@ -4,7 +4,7 @@
   <div class="center">
 	  <form method="post" class="card" novalidate>
 	  	{% csrf_token %}
-	    <h2 class="text-center">Log in to your account</h2>
+	    <h2 class="text-center">Register</h2>
 		{% for field in form %}
 	    		{{ field.label_tag }}
 	        	{{ field }}
@@ -13,10 +13,10 @@
 	        	{% endif %}
 		{% endfor %}
 
-		<input type="submit" value="Login" class="btn btn-primary full-width">
+		<input type="submit" value="Register" class="btn btn-primary full-width">
 		<hr>
 		<p class="text-center">Forgot your password <a href="#">Reset Password</a></p>
-		<p class="text-center">Don't have a account? <a href="/accounts/register/">Join Now</a></p>
+		<p class="text-center">Already have a account? <a href="/accounts/login/">Log In</a></p>
 	</form>
 </div>
 

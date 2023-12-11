@@ -1,4 +1,5 @@
 from django.db import models as m
+from django.contrib.auth.models import User
 
 
 class Models(m.Model):
@@ -33,7 +34,13 @@ class ModelScales(m.Model):
 
 # TODO to w sumie może być po prostu user, on też ma name i address email
 class Experts(m.Model):
-    name = m.IntegerField()
+    user = m.OneToOneField(
+        User,
+        on_delete=m.DO_NOTHING,
+        primary_key=False,
+        default=0
+    )
+    name = m.CharField(max_length=50)
     address = m.CharField(max_length=50)
 
 
