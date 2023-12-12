@@ -3,16 +3,11 @@
 {%block content%}
 
     Witaj! <b>{{  user.username }}</b><br/>
-    Jesteś w grupach:
-    <ul>
-        {% for group in groupnames %}
-            <li>
-                 {{ group }}
-            </li>
-        {% endfor %}
-    </ul>
     <div>
         <a href={%  url 'scenarios' %}>Moje Scenariusze</a>
+    </div>
+    <div>
+        <a href={% url 'expert-panel' %}>Panel Experta</a>
     </div>
 
 {%endblock content%}
