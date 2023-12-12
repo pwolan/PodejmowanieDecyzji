@@ -32,7 +32,7 @@ class CreateScenarioView(LoginRequiredMixin, CreateView):
         modelCriteriasRoot.save()
         return super().form_valid(form)
     def get_success_url(self):
-        return reverse_lazy('modify-criteria', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('modify-criteria', kwargs={'pk': self.scenarioID})
 
 
 class ScenarioDetailView(LoginRequiredMixin, DetailView):
