@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.utils import ErrorList
 
 from ..models.models import Models, Criterias, Alternatives
 from ..models.models import Models, ModelCriterias
@@ -48,3 +49,17 @@ def validate_url(url):
 
 class JoinScenarioForm(forms.Form):
     url = forms.CharField(label="Tutaj wpisz kod od facylitatora", required=True, validators=[validate_url])
+
+class AlternativeDecisionForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        criterias = kwargs.pop("criterias")
+        prefix = kwargs.pop("prefix")
+        super().__init__(*args, **kwargs)
+        for criterium in criterias:
+            print(criterium)
+            self.fields[prefix+"_"+str(criterium['id'])] = forms.DecimalField(label="")
+
+
+    def save(self):
+        pass

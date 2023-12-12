@@ -3,9 +3,15 @@
 {%block content%}
     Witaj! <b>{{  user.username }}</b><br/>
     <h2>Panel Eksperta</h2>
+    <p>Twoje ankiety:</p>
+    <ul>
+    {% for scenario in scenarios %}
+    	<li>{{ scenario.id }} <a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a> </li>
+    {% endfor %}
+    
+    </ul>
     <p>Tutaj możesz dopisywać się do ankiet</p>
 
-{# TODO  Tu trzeba wrzucić formularz do zapisywania do ankiet  #}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

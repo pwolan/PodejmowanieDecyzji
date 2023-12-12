@@ -4,8 +4,7 @@ from .views.auth_views import MyLoginView, MyRegisterView
 from .views.facilitator.criterias import CreateCriteriaView
 from .views.facilitator.scenario import ScenarioView, CreateScenarioView, ScenarioDetailView, ScenarioSubmitView
 from .views.facilitator.alternatives import CreateAlternativesView
-# from .views.expert.QuestionareView import QuestionareView
-from .views.expert.index import ExpertPanel
+from .views.expert.index import ExpertPanel,QuestionareView,AlternativesDecisionView
 from .views import index as views
 
 new_urls = [
@@ -20,6 +19,7 @@ new_urls = [
     path('scenarios/<pk>/alternatives/modify', CreateAlternativesView.as_view(), name='modify-alternatives'),
     path('scenarios/<pk>/submit', ScenarioSubmitView.as_view(), name='scenario-submit'),
     path('panel/', ExpertPanel.as_view(), name='expert-panel'),
-    # path('questionare/<str:url>', QuestionareView.as_view(), name='questionare')
+    path('questionare/alternative/<int:alt1>/<int:alt2>/<str:url>', AlternativesDecisionView.as_view(), name='alternatives-decision'),
+    path('questionare/<str:url>', QuestionareView.as_view(), name='questionare'),
 ]
 urlpatterns = new_urls

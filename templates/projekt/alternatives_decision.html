@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+{%block content%}
+    <form method="post">
+        {% csrf_token %}
+        <div class="alternatives_form_container" style="display: grid; grid-template-rows: repeat({{ len }}, 100px); grid-template-columns: 1fr 1fr 1fr; width:1000px; grid-auto-flow: column;">
+
+                 <h2 style="text-align: center; color: white;">x</h2>
+                 {% for criteria in criterias %}
+                    <div>{{ criteria.name }}</div>
+                 {% endfor %}
+
+
+               <h2 style="text-align: center">{{ alt1.name }}</h2>
+                {{ form1.as_p }}
+
+
+
+                <h2 style="text-align: center">{{ alt2.name }}</h2>
+                {{ form2.as_p }}
+
+
+        </div>
+        <input type="submit" value="Wyślij" style="display: block; margin: 0 auto; padding: 5px 15px">
+    </form>
+
+{%endblock content%}

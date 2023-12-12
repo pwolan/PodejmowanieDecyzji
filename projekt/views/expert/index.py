@@ -2,10 +2,10 @@ import uuid
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic import ListView, CreateView, DetailView, FormView,TemplateView
 
-from projekt.forms.forms import ModelForms, SubmitScenarioForm, JoinScenarioForm
-from projekt.models import DecisionScenarios,ModelExperts, Models, Experts
+from projekt.forms.forms import ModelForms, SubmitScenarioForm, JoinScenarioForm, AlternativeDecisionForm
+from projekt.models import DecisionScenarios, ModelExperts, Models, Experts, Alternatives,Criterias
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -20,14 +20,13 @@ class ExpertPanel(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['scenarios'] = DecisionScenarios.objects.filter(modelID__modelexperts__expertID=self.request.user.pk)
-        print(context['scenarios'])
+        expertID = Experts.objects.get(user_id=self.request.user.pk)
+        context['scenarios'] = DecisionScenarios.objects.filter(modelID__modelexperts__expertID=expertID)
         return context
     
     def form_valid(self, form): 
         url = form.cleaned_data.get('url')
         expertID = Experts.objects.get(user_id=self.request.user.pk)
-        modelID = None
         modelID = Models.objects.get(id=DecisionScenarios.objects.get(url=url).modelID_id)  
         if not ModelExperts.objects.filter(expertID=expertID, modelID=modelID).exists():
             connection = ModelExperts.objects.create(modelID=modelID, expertID=expertID)
@@ -42,3 +41,42 @@ class ExpertPanel(FormView):
             return super().form_invalid(form)
 
         return super().form_valid(form)
+
+
+class QuestionareView(TemplateView):
+    template_name = 'projekt/questionare.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        scenario = DecisionScenarios.objects.get(url=self.kwargs['url'])
+        print(scenario)
+        alternatives = Alternatives.objects.filter(modelalternatives__modelID__decisionscenarios=scenario)
+        print(alternatives)
+        context['alternatives'] = alternatives
+        context['url'] = self.kwargs['url']
+        return context
+
+
+
+
+
+class AlternativesDecisionView(TemplateView):
+    template_name = 'projekt/alternatives_decision.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        alt1 = Alternatives.objects.get(pk=self.kwargs['alt1'])
+        alt2 = Alternatives.objects.get(pk=self.kwargs['alt2'])
+        context['alt1'] = alt1
+        context['alt2'] = alt2
+
+        # get criterias
+        model = Models.objects.get(decisionscenarios__url=self.kwargs['url'])
+        criterias = Criterias.objects.filter(modelcriterias__modelID=model)
+        context['criterias'] = criterias
+
+        # make form
+        context['form1'] = AlternativeDecisionForm(prefix="alt1", criterias=criterias.values())
+        context['form2'] = AlternativeDecisionForm(prefix="alt2", criterias=criterias.values())
+        context['len'] = len(criterias.values())+1
+        return context
