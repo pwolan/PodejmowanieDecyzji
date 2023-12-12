@@ -2,9 +2,12 @@
 {% load criterium_tag %}
 
 {%block content%}
-
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'scenarios'%}>SCENARIOS</a>
+    <a href={% url 'scenario-detail' scenario.pk %}>SCENARIO-DETAIL</a>
+</div>
 {% criterium_tag criterias %}
-
 <form action = "" method = "post">
     {% csrf_token %}
     {{form }}

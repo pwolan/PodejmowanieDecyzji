@@ -1,7 +1,11 @@
 {%extends 'base.html'%}
 
 {%block content%}
-
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'scenarios'%}>SCENARIOS</a>
+    <a href={% url 'scenario-detail' scenario.pk %}>SCENARIO-DETAIL</a>
+</div>
      <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

@@ -1,7 +1,10 @@
 {%extends 'base.html'%}
 
 {%block content%}
-
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'scenarios'%}>SCENARIOS</a>
+</div>
     Witaj! <b>{{  user.username }}</b><br/>
     <form method="post">
         {% csrf_token %}

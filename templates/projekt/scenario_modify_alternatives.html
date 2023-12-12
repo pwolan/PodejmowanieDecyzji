@@ -1,7 +1,11 @@
 {%extends 'base.html'%}
 
 {%block content%}
-
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'scenarios'%}>SCENARIOS</a>
+    <a href={% url 'scenario-detail' scenario.pk %}>SCENARIO-DETAIL</a>
+</div>
    <h2> Alternatives!</h2>
     <ul style="font-size: 20px; margin: 20px 20px">
         {% for alternative in alternatives %}
