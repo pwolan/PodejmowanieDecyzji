@@ -37,4 +37,5 @@ class CreateCriteriaView(LoginRequiredMixin, CreateView):
         my_objects = ModelCriterias.objects.filter(modelID=model.pk)
         rootCriterion = my_objects.filter(criteriaID__parent_criterion__isnull=True).first()
         context['criterias'] = rootCriterion.criteriaID
+        context['scenario'] = scenario
         return context

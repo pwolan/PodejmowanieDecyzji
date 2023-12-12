@@ -61,3 +61,8 @@ class ScenarioSubmitView(FormView):
         scenario.password = make_password(form.cleaned_data.get('password'))
         scenario.save()
         return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        scenario = DecisionScenarios.objects.get(pk=self.kwargs.get('pk'))
+        context['scenario'] = scenario
+        return context

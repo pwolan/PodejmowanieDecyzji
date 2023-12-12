@@ -15,6 +15,7 @@ class CreateAlternativesView(LoginRequiredMixin, CreateView):
         scenario = DecisionScenarios.objects.get(pk=self.kwargs['pk'])
         model = scenario.modelID
         context['alternatives'] = Alternatives.objects.filter(modelalternatives__modelID=model)
+        context['scenario'] = scenario
         print(context['alternatives'])
         return context
     def get_success_url(self):
