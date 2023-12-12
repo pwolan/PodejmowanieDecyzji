@@ -6,5 +6,10 @@
     <p>Tutaj możesz dopisywać się do ankiet</p>
 
 {# TODO  Tu trzeba wrzucić formularz do zapisywania do ankiet  #}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Wyślij">
+</form>
 
 {%endblock content%}

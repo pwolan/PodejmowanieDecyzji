@@ -17,7 +17,7 @@
     {% else%}
         <ol>
             <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
-            <li>Dodawanie elementów do porówania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
+            <li>Dodawanie elementów do porównania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
             <li>Zatwierdź scenariusz <a href={% url 'scenario-submit' object.id%}>Zatwierdź</a></li>
         </ol>
     {% endif %}

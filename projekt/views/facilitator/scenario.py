@@ -8,7 +8,7 @@ from projekt.forms.forms import ModelForms, SubmitScenarioForm
 from projekt.models import DecisionScenarios, Models, Criterias, ModelCriterias
 from django.contrib.auth.hashers import make_password
 
-class ScenarioView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class ScenarioView(LoginRequiredMixin,  ListView):
     template_name = "projekt/scenario.html"
     permission_required = "projekt.view_decisionscenarios"
     context_object_name = "scenarios"

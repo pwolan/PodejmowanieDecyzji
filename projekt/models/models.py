@@ -47,6 +47,9 @@ class Experts(m.Model):
 class ModelExperts(m.Model):
     modelID = m.ForeignKey(Models, on_delete=m.CASCADE)
     expertID = m.ForeignKey(Experts, on_delete=m.CASCADE)
+    
+    class Meta:
+        unique_together = ['modelID', 'expertID']
 
 
 class Criterias(m.Model):

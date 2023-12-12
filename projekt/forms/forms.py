@@ -2,8 +2,11 @@ from django import forms
 
 from ..models.models import Models, Criterias, Alternatives
 from ..models.models import Models, ModelCriterias
+from ..models.decisionScenarios import DecisionScenarios
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 
 class ModelForms(forms.ModelForm):
@@ -36,3 +39,12 @@ class RegisterUserForm(UserCreationForm):
         model = User
         fields = ("username", "password1", "password2")
 
+def validate_url(url):
+    if not DecisionScenarios.objects.filter(url=url).exists():
+        raise ValidationError(
+            _("%(url)s is not valid url"),
+            params={"url": url},
+        )
+
+class JoinScenarioForm(forms.Form):
+    url = forms.CharField(label="Tutaj wpisz kod od facylitatora", required=True, validators=[validate_url])
