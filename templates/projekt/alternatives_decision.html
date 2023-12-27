@@ -1,23 +1,31 @@
 {%extends 'base.html'%}
 
 {%block content%}
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'expert-panel'%}>EXPERT PANEL</a>
+</div>
     <form method="post">
         {% csrf_token %}
         <div class="alternatives_form_container" style="display: grid; grid-template-rows: repeat({{ len }}, 100px); grid-template-columns: 1fr 1fr 1fr; width:1000px; grid-auto-flow: column;">
 
                  <h2 style="text-align: center; color: white;">x</h2>
                  {% for criteria in criterias %}
-                    <div>{{ criteria.name }}</div>
+                    <div>Name: {{ criteria.name }}, Description: {{criteria.description}}</div>
                  {% endfor %}
 
 
-               <h2 style="text-align: center">{{ alt1.name }}</h2>
-                {{ form1.as_p }}
+               <h2 style="text-align: center">Name: {{ alt1.name }} Description: {{ alt1.description }} 
+                <br>
+                   vs. 
+                <br>
+                Name: {{alt2.name}} Description: {{alt2.description}}</h2>
+                {{ form.as_p }}
+                
 
 
-
-                <h2 style="text-align: center">{{ alt2.name }}</h2>
-                {{ form2.as_p }}
+                <!-- <h2 style="text-align: center">{{ alt2.name }}</h2>
+                {{ form2.as_p }} -->
 
 
         </div>

@@ -1,16 +1,18 @@
 {%extends 'base.html'%}
 
 {%block content%}
+<div>
+    <a href={% url 'index'%}>HOME</a>
+</div>
     Witaj! <b>{{  user.username }}</b><br/>
     <h2>Panel Eksperta</h2>
     <p>Twoje ankiety:</p>
     <ul>
     {% for scenario in scenarios %}
-    	<li>{{ scenario.id }} <a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a> </li>
+    	<li>{{ scenario.id }} {% if not scenario.completed%}<a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a>{% endif%}</li>
     {% endfor %}
     
     </ul>
-    <p>Tutaj możesz dopisywać się do ankiet</p>
 
 <form method="post">
     {% csrf_token %}

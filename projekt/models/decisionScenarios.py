@@ -9,5 +9,6 @@ class DecisionScenarios(m.Model):
     weightID = m.IntegerField(unique=True, null=True, blank=True)
     userID = m.ForeignKey(User, on_delete=m.CASCADE)
     submited = m.BooleanField(default=False)
+    completed = m.BooleanField(default=False)
     url = m.CharField(max_length=100, null=True, blank=True)
     password = m.CharField(max_length=128, null=True, blank=True)

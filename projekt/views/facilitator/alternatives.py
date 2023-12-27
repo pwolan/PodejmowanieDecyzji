@@ -26,5 +26,3 @@ class CreateAlternativesView(LoginRequiredMixin, CreateView):
         model = scenario.modelID
         model_alternatives = ModelAlternatives.objects.create(modelID=model, alternativeID=alternative)
         return super().form_valid(form)
-
-

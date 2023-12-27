@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.utils import ErrorList
 
-from ..models.models import Models, Criterias, Alternatives
+from ..models.models import Models, Criterias, Alternatives, ModelScales, Scales
 from ..models.models import Models, ModelCriterias
 from ..models.decisionScenarios import DecisionScenarios
 from django.contrib.auth.forms import UserCreationForm
@@ -33,7 +33,8 @@ class AlternativesForm(forms.ModelForm):
 
 class SubmitScenarioForm(forms.Form):
     password = forms.CharField(label="Password (If not set, password not used)", required=False)
-
+class EndScenarioForm(forms.Form):
+    password = forms.CharField(label="Password (If not set, password not used)", required=False)
 
 class RegisterUserForm(UserCreationForm):
     class Meta:
@@ -55,11 +56,15 @@ class AlternativeDecisionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         criterias = kwargs.pop("criterias")
         prefix = kwargs.pop("prefix")
+        model = kwargs.pop("model")
+            
+        scales = Scales.objects.filter(modelscales__modelID=model)  
+        choices = [(s.value, s.description) for s in scales]
+        # print(choices)
         super().__init__(*args, **kwargs)
         for criterium in criterias:
-            print(criterium)
-            self.fields[prefix+"_"+str(criterium['id'])] = forms.DecimalField(label="")
-
-
+            # print(criterium)
+            # self.fields[prefix+"_"+str(criterium['id'])] = forms.DecimalField(label="")
+            self.fields[prefix+"_"+str(criterium['id'])] = forms.ChoiceField(label="", choices=choices)
     def save(self):
         pass
