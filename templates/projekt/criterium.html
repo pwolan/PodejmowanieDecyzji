@@ -1,7 +1,7 @@
 {% load criterium_tag %}
 <div class="criteria-block" >
     {% for child in children %}
-    <div> ID: {{child.id}}, Parent: {{ child.parent_criterion }}, Name: {{ child.name }}, Criterium: {{ child.description }}</div>
+    <div> ID: {{child.id}}, Parent: {{ child.parent_criterion }}, Name: {{ child.name }}, Description: {{ child.description }}</div>
         {% if child.children.count > 0 %}
              {% criterium_tag child %}
         {% endif %}

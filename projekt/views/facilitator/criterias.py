@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from projekt.forms.forms import CriteriasForms
-from projekt.models import Criterias, DecisionScenarios, ModelCriterias
+from projekt.models import Criterias, DecisionScenarios, ModelCriterias, Scales
 
 
 class CreateCriteriaView(LoginRequiredMixin, CreateView):
@@ -37,4 +37,5 @@ class CreateCriteriaView(LoginRequiredMixin, CreateView):
         my_objects = ModelCriterias.objects.filter(modelID=model.pk)
         rootCriterion = my_objects.filter(criteriaID__parent_criterion__isnull=True).first()
         context['criterias'] = rootCriterion.criteriaID
+        context['scenario'] = scenario
         return context

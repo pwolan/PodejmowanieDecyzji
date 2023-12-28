@@ -368,3 +368,15 @@ textarea {
   padding: 5px 10px;
   display: inline-block;
 }
+
+.alternatives_form_container p,
+.alternatives_form_container div,
+.alternatives_form_container h2
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alternatives_form_container p>input{
+  display: block;
+}

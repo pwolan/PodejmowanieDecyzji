@@ -1,17 +1,47 @@
 {%extends 'base.html'%}
+{% load criterium_tag %}
 
 {%block content%}
-
+<a href={% url 'index'%}>HOME</a>
+<a href={% url 'scenarios'%}>SCENARIOS</a>
 <h1>Scenario id:{{ object.id }}</h1>
 <ul>
-    <li>DataID:{{ object.dataID }}</li>
-    <li>ModelID:{{ object.modelID }}</li>
-    <li>WeightID:{{ object.weightID }}</li>
+    <li>DataID: {{ object.dataID }}</li>
+    <li>ModelID: {{ object.modelID }}</li>
+    <li>WeightID: {{ object.weightID }}</li>
+    <li>Ranking method: {{ ranking_method }}</li>
+    <li>Aggregation method: {{ aggregation_method }}</li>
+    <li>Completeness required: {{ completeness_required }}</li>
 </ul>
-<ol>
-    <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
-    <li>Dodawanie elementów do porówania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
-    <li>Dodanie ekspertów <a href="">Dodaj ekspertów</a></li>
-</ol>
+
+    {% if object.submited %}
+        <div>Scenariusz został zatwierdzony! Kod:
+           <span style="color: red;">{{ link }}</span>
+        </div>
+        <div>Formularz ukończyło: <span>{{ fractional_experts }}</span> ekspertów. {% if not object.completed%}{% if frac == 0%}<a href={% url 'scenario-end' object.id%}>Ukończ ankietę</a>{%endif%}{%else%}Ankieta ukończona{%endif%}
+        </div>
+        {% if object.completed%}
+        <div><a href="{% url 'generate_json_file' scenario.pk %}">Generuj Dajsona</a></div>
+        {% endif%}
+        <div>
+            <h2> Criterias:</h2>
+            {% criterium_tag criterias %}
+        </div>
+        <div>
+            <h2> Alternatives:</h2>
+    <ul style="font-size: 18px; margin: 18px 18px">
+        {% for alternative in alternatives %}
+            <li>{{ alternative.pk }} - Name: {{ alternative.name }} &nbsp;</li>
+            <div>Description: {{ alternative.description}} &nbsp;</div>
+        {% endfor %}
+    </ul>
+        </div>
+    {% else%}
+        <ol>
+            <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
+            <li>Dodawanie elementów do porównania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
+            <li>Zatwierdź scenariusz <a href={% url 'scenario-submit' object.id%}>Zatwierdź</a></li>
+        </ol>
+    {% endif %}
 
 {%endblock content%}

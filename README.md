@@ -17,5 +17,3 @@ python manage.py makemigrations
 python manage.py migrate
 - Serwer:
 python manage.py runserver
-- Swagger:
-*adres_strony*/swagger/
