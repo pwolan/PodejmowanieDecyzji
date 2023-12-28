@@ -1,15 +1,9 @@
-from typing import Any
-import uuid
-
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView, FormView,TemplateView
+from django.urls import reverse
+from django.views.generic import TemplateView
 
-from projekt.forms.forms import ModelForms, SubmitScenarioForm, JoinScenarioForm, AlternativeDecisionForm
-from projekt.models import DecisionScenarios, ModelExperts, Models, Experts, Alternatives,Criterias
-from django.contrib.auth.hashers import make_password
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from projekt.forms.forms import AlternativeDecisionForm
+from projekt.models import DecisionScenarios, Models, Alternatives,Criterias
 from projekt.methods_matrices import make_decision_tree
 
 
@@ -40,7 +34,7 @@ class QuestionareCriteriumView(TemplateView):
         childreen = Criterias.objects.filter(parent_criterion = criterium)
        
         if len(childreen) == 0:
-            context['alternatives'] = Alternatives.objects.filter(modelalternatives_modelID=scenario.modelID)
+            context['alternatives'] = Alternatives.objects.filter(modelalternatives__modelID__decisionscenarios=scenario)
         else:
             context['criterions'] = childreen
         return context

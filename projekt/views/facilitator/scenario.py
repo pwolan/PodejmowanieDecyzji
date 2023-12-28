@@ -11,11 +11,10 @@ from django.contrib.auth.hashers import make_password
 from projekt.methods_matrices import make_decision_tree, generate_json_file
 
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
 class ScenarioView(LoginRequiredMixin,  ListView):
-    template_name = "projekt/scenario.html"
+    template_name = "scenario/scenario.html"
     permission_required = "projekt.view_decisionscenarios"
     context_object_name = "scenarios"
     def get_queryset(self):
@@ -26,7 +25,7 @@ class ScenarioView(LoginRequiredMixin,  ListView):
 class CreateScenarioView(LoginRequiredMixin, CreateView):
     model = Models
     form_class = ModelForms
-    template_name = 'projekt/scenario_create.html'
+    template_name = 'scenario/scenario_create.html'
     scenarioID = None
     def form_valid(self, form):
         m = form.save()
@@ -47,7 +46,7 @@ class CreateScenarioView(LoginRequiredMixin, CreateView):
 
 class ScenarioDetailView(LoginRequiredMixin, DetailView):
     model = DecisionScenarios
-    template_name = 'projekt/scenario_detail.html'
+    template_name = 'scenario/scenario_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,7 +78,7 @@ class ScenarioDetailView(LoginRequiredMixin, DetailView):
 
 
 class ScenarioSubmitView(FormView):
-    template_name = "projekt/scenario_submit.html"
+    template_name = "scenario/scenario_submit.html"
     form_class = SubmitScenarioForm
     def get_success_url(self):
         return reverse_lazy('scenario-detail', kwargs={'pk': self.kwargs['pk']})
@@ -97,7 +96,7 @@ class ScenarioSubmitView(FormView):
         context['scenario'] = scenario
         return context
 class ScenarioEndView(FormView):
-    template_name = "projekt/scenario_end.html"
+    template_name = "scenario/scenario_end.html"
     form_class = EndScenarioForm
     def get_success_url(self):
         return reverse_lazy('scenario-detail', kwargs={'pk': self.kwargs['pk']})

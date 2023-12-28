@@ -1,6 +1,7 @@
 import json
 from projekt.models import Scales, DecisionScenarios, Models, Criterias, Alternatives, Experts, Matrices
 
+# TODO Usunąć? Jeśli można
 def add_scale(): # TYLKO PRZY RESTARCIE BAZY DANYCH
     Scales.objects.create(value=0.25, description="4 razy gorsze")
     Scales.objects.create(value=1/3, description="3 razy gorsze")

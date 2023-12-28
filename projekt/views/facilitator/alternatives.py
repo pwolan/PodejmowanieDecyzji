@@ -8,7 +8,7 @@ from projekt.forms.forms import AlternativesForm
 class CreateAlternativesView(LoginRequiredMixin, CreateView):
     model = Alternatives
     form_class = AlternativesForm
-    template_name = 'projekt/scenario_modify_alternatives.html'
+    template_name = 'scenario/scenario_modify_alternatives.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

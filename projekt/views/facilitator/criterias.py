@@ -9,7 +9,7 @@ from projekt.models import Criterias, DecisionScenarios, ModelCriterias, Scales
 class CreateCriteriaView(LoginRequiredMixin, CreateView):
     model = Criterias
     form_class = CriteriasForms
-    template_name = 'projekt/scenario_modify_criterias.html'
+    template_name = 'scenario/scenario_modify_criterias.html'
 
 
 

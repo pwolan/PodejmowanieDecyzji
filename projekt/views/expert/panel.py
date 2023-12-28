@@ -1,17 +1,11 @@
-from typing import Any
-import uuid
-
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView, FormView,TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 
-from projekt.forms.forms import ModelForms, SubmitScenarioForm, JoinScenarioForm, AlternativeDecisionForm
-from projekt.models import DecisionScenarios, ModelExperts, Models, Experts, Alternatives,Criterias
-from django.contrib.auth.hashers import make_password
+from projekt.forms.forms import JoinScenarioForm
+from projekt.models import DecisionScenarios, ModelExperts, Models, Experts
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from projekt.methods_matrices import make_decision_tree
-
 
 
 class ExpertPanel(FormView):
