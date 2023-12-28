@@ -1,4 +1,5 @@
-from projekt.models import Scales, DecisionScenarios, Models, Criterias, ModelCriterias, Alternatives
+import json
+from projekt.models import Scales, DecisionScenarios, Models, Criterias, Alternatives, Experts, Matrices
 
 def add_scale(): # TYLKO PRZY RESTARCIE BAZY DANYCH
     Scales.objects.create(value=0.25, description="4 razy gorsze")
@@ -9,7 +10,7 @@ def add_scale(): # TYLKO PRZY RESTARCIE BAZY DANYCH
     Scales.objects.create(value=3, description="3 razy lepsze")
     Scales.objects.create(value=4, description="4 razy lepsze")
 
-def make_decision_tree(decisionScenario: DecisionScenarios):
+def make_decision_tree(decisionScenario: DecisionScenarios) -> list:
     tree = []
     model = Models.objects.get(pk=decisionScenario.modelID.pk)
     criterias = Criterias.objects.filter(modelcriterias__modelID=model)
@@ -30,6 +31,8 @@ def make_decision_tree(decisionScenario: DecisionScenarios):
             tree.append([first_instance.pk, len(first_instance_children)])
         rootChildren = rootChildren | first_instance_children
     print(tree)
+
+    return tree
         
         # combined_queryset = initial_queryset | YourModel.objects.filter(id=additional_instance.id)
 
@@ -67,6 +70,33 @@ def geometric_mean_N_vectors(vectors: list[list[int|float]]):
     result = [product[i]**(1/len(vectors)) for i in range(len(vectors[0]))]
     return result
 
+def generate_json_file(decisionScenario: DecisionScenarios):
+    model = Models.objects.get(pk=decisionScenario.modelID.pk)
+    alternatives = Alternatives.objects.filter(modelalternatives__modelID=model)
+    criterias = Criterias.objects.filter(modelcriterias__modelID=model)
+    experts = Experts.objects.filter(modelexperts__modelID=model)
+    scales = Scales.objects.filter(modelscales__modelID=model)
+    matrices = Matrices.objects.filter(datamatrices__dataID=decisionScenario.dataID)
+    data = {}
+    data["decision_scenario_id"] = decisionScenario.pk
+    data["model_id"] = model.pk
+    data["model"] = {}
+    print(data)
+    data["model"]["alternatives"] = [{"id": alternative.pk, "name": alternative.name, "description": alternative.description} for alternative in alternatives]
+    data["model"]["criteria"] = [{"id": criteria.pk, "parent_criterion": criteria.parent_criterion.pk, "name": criteria.name, "description": criteria.description} for criteria in criterias]
+    print(data)
+    data["model"]["experts"] = [{"id": expert.pk, "name": expert.name, "address": expert.address} for expert in experts]
+    data["model"]["ranking_method"] = model.ranking_method
+    data["model"]["aggregation_method"] = model.aggregation_method
+    data["model"]["completeness_required"] = model.completeness_required
+    data["model"]["scale"]  = [{"value": scale.value, "description": scale.description} for scale in scales]
+    
+    data["data"] = [{"id": ""} for matrice in matrices]
+    data["weights"] = {}
+    print(data)
+    name = "decisionScenario_" + str(decisionScenario.pk) + ".json"
+    with open("name", "w") as json_file:
+        json.dump(data, json_file, indent=2)
 #TESTY
 # print(geometric_mean([]))
 # print(geometric_mean([1]))

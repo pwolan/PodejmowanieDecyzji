@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+    Witaj!
+    {{criterium}}
+
+    {% if children %}
+        "Są dzieci"
+    {% else %}
+        "Nie ma dzieci"
+    {% endif %}
+
+    {% comment %} {% for alt1 in alternatives %}
+            {% for alt2 in alternatives %}
+                    {% if forloop.parentloop.counter0 < forloop.counter0 %}
+                        {# TODO jak się wypełnij to kolor powinien zmienić się na zielony #}
+                        <div style="width: 50px; height: 50px; background-color: yellow; display: flex; justify-content: center; align-items: center;">
+                            <a href={% url 'alternatives-decision' alt1.id alt2.id url %}>{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}</a>
+                        </div>
+                    {% else %}
+                        <div style="width: 50px; height: 50px; background-color: gray;">
+                        </div>
+                    {% endif %}
+            {% endfor %}
+
+    {% endfor %}  {% endcomment %}
+
+{%endblock content%}

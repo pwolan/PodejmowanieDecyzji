@@ -9,7 +9,7 @@
     <p>Twoje ankiety:</p>
     <ul>
     {% for scenario in scenarios %}
-    	<li>{{ scenario.id }} {% if not scenario.completed%}<a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a>{% endif%}</li>
+    	<li>{{ scenario.id }} {% if not scenario.completed%}<a href={% url 'questionare' scenario.url %}>{{ scenario.url }}</a>{%else%}{{scenario.url}}{% endif%}</li>
     {% endfor %}
     
     </ul>

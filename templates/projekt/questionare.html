@@ -7,20 +7,13 @@
 </div>
     Witaj! Zapraszam do ankietki :) <3 <3 <3
     <div style="display: grid;  grid-template-columns: repeat({{ alternatives|length }},50px);">
-        {% for alt1 in alternatives %}
-            {% for alt2 in alternatives %}
-                    {% if forloop.parentloop.counter0 < forloop.counter0 %}
-                        {# TODO jak się wypełnij to kolor powinien zmienić się na zielony #}
-                        <div style="width: 50px; height: 50px; background-color: yellow; display: flex; justify-content: center; align-items: center;">
-                            <a href={% url 'alternatives-decision' alt1.id alt2.id url %}>{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}</a>
-                        </div>
-                    {% else %}
-                        <div style="width: 50px; height: 50px; background-color: gray;">
-                        </div>
-                    {% endif %}
+        <ul>
+            {% for t in tree %}
+                <li><a href="{{t.link}}">{{t.id}}</a></li>
             {% endfor %}
+        </ul>
 
-        {% endfor %}
+       
     </div>
 
 {%endblock content%}

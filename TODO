@@ -13,16 +13,17 @@
 - Przycisk przy scenariuszu dla facylitatora do generacji takiego pliku
 4. Panel Eksperta:
 - zmienić tekst w panelu eksperta #DONE
-- każde kryterium dostaje własną macierz do wypełnienia 
+- każde kryterium dostaje własną macierz do wypełnienia #IN-PROGRESS
 - zatwierdzenie przez eksperta przed wypełnieniem kompletnym (opcjonalne)
 5. Macierz eksperta:
 - skala wzięta z project_scales #DONE
 - tylko jeden output na parę #DONE
 - opis alternatyw, kryteriów wyświetlany na ekranie #DONE
+
 6. Liczenie wyników:
 - tworzenie drzewa kryteriów #DONE
 - liczenie macierzy wynikowej
 - umieszczanie ich w odpowiednim miejscu
 - przycisk do uruchomienia wyliczania wyników (od strony facylitatora)
 7. Baza danych:
-- wyczyścić bazę danych(aby modelsID zgadzało się z decisionscenarioID)
+- wyczyścić bazę danych(aby modelsID zgadzało się z decisionscenarioID) // może relacja one-to-one?

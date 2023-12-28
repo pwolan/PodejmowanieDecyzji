@@ -6,8 +6,7 @@ from .decisionScenarios import DecisionScenarios
 class Matrices(m.Model):
     expertID = m.ForeignKey(Experts, on_delete=m.CASCADE, null=True)
     criteriaID = m.ForeignKey(Criterias, on_delete=m.CASCADE, null=True)
-    rowSize = m.IntegerField()
-    columnSize = m.IntegerField()
+    size = m.IntegerField()
 
 
 class MatriceElements(m.Model):
