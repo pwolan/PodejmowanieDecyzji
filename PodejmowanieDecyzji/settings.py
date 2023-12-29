@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-48#n64l+6eu80yc&m0sjxbl*@(pm)m3y1a0s*mcezb+ubxiw3y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['20.215.12.1','podejmujdecyzje.azurewebsites.net', 'www.podejmujdecyzje.azurewebsites.net']
 
 
 # Application definition
@@ -40,10 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projekt.apps.ProjektConfig',
     # 'authentication.apps.AuthConfig',
-    # 'rest_framework_swagger',       # Swagger
-    # 'rest_framework',               # Django rest framework
-    # 'drf_yasg',                      # Yet Another Swagger generator
-    # 'rest_framework_simplejwt',      # Authentication
 ]
 
 MIDDLEWARE = [
