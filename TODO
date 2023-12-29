@@ -5,7 +5,7 @@
 - Dodanie skali (na razie jednej dla wszystkich, później można wybierać ze stworzonych wcześniej) #DONE
 - Po zatwierdzeniu scenariusza wypisać informację ilu jest ekspertów/ilu zakończyło #DONE
 - po potwierdzeniu nie widać drzewka kryteriów/ alternatyw #DONE
-- przycisk USUŃ dla kryteriów i alternatyw (opcjonalne)
+- przycisk USUŃ dla kryteriów i alternatyw (opcjonalne) # DONE
 - zakaz zatwierdzenia pustych scenariuszy (opcjonalne)
 - dać przycisk do zakończenia pracy ekspertów (opcjonalne) #DONE
 3. Plik JSON:

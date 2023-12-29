@@ -20,6 +20,7 @@ new_urls = [
     path('scenarios/<pk>/criterias/modify', CreateCriteriaView.as_view(), name='modify-criteria'),
     path('scenarios/<scenarioId>/criterias/modify/<pk>/delete', DeleteCriteriaView.as_view(), name='delete-criteria'),
     path('scenarios/<pk>/alternatives/modify', CreateAlternativesView.as_view(), name='modify-alternatives'),
+    path('scenarios/<scenarioId>/alternatives/modify/<pk>/delete', DeleteAlternativesView.as_view(), name='delete-alternatives'),
     path('scenarios/<pk>/submit', ScenarioSubmitView.as_view(), name='scenario-submit'),
     path('scenarios/<pk>/end', ScenarioEndView.as_view(), name='scenario-end'),
     path('panel/', ExpertPanel.as_view(), name='expert-panel'),
