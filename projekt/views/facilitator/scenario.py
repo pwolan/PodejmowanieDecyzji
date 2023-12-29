@@ -74,7 +74,6 @@ class ScenarioDetailView(LoginRequiredMixin, DetailView):
             context['link'] =  scenario.url
         context['scenario'] = scenario
         make_decision_tree(scenario)
-        # generate_json_file(scenario)
         return context
 
 

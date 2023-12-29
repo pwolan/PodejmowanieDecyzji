@@ -1,5 +1,5 @@
 import json
-from projekt.models import Scales, DecisionScenarios, Models, Criterias, Alternatives, Experts, Matrices
+from projekt.models import Scales, DecisionScenarios, Models, Criterias, Alternatives, Experts, Matrices, DataWeights
 
 def add_scale(): # TYLKO PRZY RESTARCIE BAZY DANYCH
     Scales.objects.create(value=0.25, description="4 razy gorsze")
@@ -76,15 +76,17 @@ def generate_json_file(decisionScenario: DecisionScenarios):
     criterias = Criterias.objects.filter(modelcriterias__modelID=model)
     experts = Experts.objects.filter(modelexperts__modelID=model)
     scales = Scales.objects.filter(modelscales__modelID=model)
+    # matrices i weights sprawdzić
     matrices = Matrices.objects.filter(datamatrices__dataID=decisionScenario.dataID)
+    weights = DataWeights.objects.filter(scenarioweights__weightsID=decisionScenario.weightID)
     data = {}
     data["decision_scenario_id"] = decisionScenario.pk
     data["model_id"] = model.pk
     data["model"] = {}
-    print(data)
     data["model"]["alternatives"] = [{"id": alternative.pk, "name": alternative.name, "description": alternative.description} for alternative in alternatives]
-    data["model"]["criteria"] = [{"id": criteria.pk, "parent_criterion": criteria.parent_criterion.pk, "name": criteria.name, "description": criteria.description} for criteria in criterias]
-    print(data)
+    data["model"]["criteria"] = [{"id": criteria.pk, "parent_criterion": criteria.parent_criterion.pk if isinstance(criteria.parent_criterion, int) else None,
+                                   "name": criteria.name, "description": criteria.description} for criteria in criterias]
+    # DO SPRAWDZENIA MODEL CRITERIA W JSON
     data["model"]["experts"] = [{"id": expert.pk, "name": expert.name, "address": expert.address} for expert in experts]
     data["model"]["ranking_method"] = model.ranking_method
     data["model"]["aggregation_method"] = model.aggregation_method
@@ -92,11 +94,11 @@ def generate_json_file(decisionScenario: DecisionScenarios):
     data["model"]["scale"]  = [{"value": scale.value, "description": scale.description} for scale in scales]
     
     data["data"] = [{"id": ""} for matrice in matrices]
-    data["weights"] = {}
+    data["weights"] = [{"criterion_id": weight.criteriaID.pk, "w": []} for weight in weights]
     print(data)
     name = "decisionScenario_" + str(decisionScenario.pk) + ".json"
-    with open("name", "w") as json_file:
-        json.dump(data, json_file, indent=2)
+    with open(name, "w") as json_file:
+        json.dump(data, json_file, indent=4)
 #TESTY
 # print(geometric_mean([]))
 # print(geometric_mean([1]))

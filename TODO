@@ -14,6 +14,7 @@
 4. Panel Eksperta:
 - zmienić tekst w panelu eksperta #DONE
 - każde kryterium dostaje własną macierz do wypełnienia #IN-PROGRESS
+- dodanie/zmiana adresu eksperta
 - zatwierdzenie przez eksperta przed wypełnieniem kompletnym (opcjonalne)
 5. Macierz eksperta:
 - skala wzięta z project_scales #DONE
