@@ -1,29 +1,31 @@
 {%extends 'base.html'%}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/questionare.css' %}">
+{% endblock header %}
 
 {%block content%}
-
-    Witaj!
-    {{criterium}}
-
-    {% if children %}
-        "Są dzieci"
-    {% else %}
-        "Nie ma dzieci"
-    {% endif %}
-
-    {% comment %} {% for alt1 in alternatives %}
-            {% for alt2 in alternatives %}
-                    {% if forloop.parentloop.counter0 < forloop.counter0 %}
-                        {# TODO jak się wypełnij to kolor powinien zmienić się na zielony #}
-                        <div style="width: 50px; height: 50px; background-color: yellow; display: flex; justify-content: center; align-items: center;">
-                            <a href={% url 'alternatives-decision' alt1.id alt2.id url %}>{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}</a>
-                        </div>
-                    {% else %}
-                        <div style="width: 50px; height: 50px; background-color: gray;">
-                        </div>
-                    {% endif %}
-            {% endfor %}
-
-    {% endfor %}  {% endcomment %}
-
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'expert-panel'%}>EXPERT PANEL</a>
+    <a href={% url 'questionare' url %}>KWESTIONARIUSZ</a>
+</div>
+    <form  method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        {% if criterions %}
+            <h2>Porównanie podkryteriów</h2>
+            <h2>Kryterium: <b>{{ criterium.name }}</b></h2>
+            <h3>{{ criterium.description }}</h3>
+            {% include 'projekt/decision_grid.html' with alternatives=criterions form=form %}
+        {% else %}
+            <h2>Porównanie alternatyw</h2>
+            <h2>Kryterium: <b>{{ criterium.name }}</b></h2>
+            <h3>{{ criterium.description }}</h3>
+            {% include 'projekt/decision_grid.html' with alternatives=alternatives form=form %}
+        {% endif %}
+        {{ form.error }}
+        <input style="padding: 5px 20px; font-size: 24px; display: block; margin: 0 auto;" type="submit" value="Zapisz">
+    </form>
 {%endblock content%}

@@ -1,0 +1,26 @@
+{%extends 'base.html' %}
+
+{%block content%}
+<div>
+{#    <a href={% url 'index'%}>HOME</a>#}
+{#    <a href={% url 'scenarios'%}>SCENARIOS</a>#}
+{#    <a href={% url 'scenario-detail'  %}>SCENARIO-DETAIL</a>#}
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    {{ form }}
+    <input type="submit" value="Confirm">
+</form>
+</div>
+{#   <h2> Alternatives:</h2>#}
+{#    <ul style="font-size: 18px; margin: 18px 18px">#}
+{#        {% for alternative in alternatives %}#}
+{#            <li>{{ alternative.pk }} - Name: {{ alternative.name }} &nbsp;</li>#}
+{#            <div>Description: {{ alternative.description}} &nbsp;</div>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#<form action = "" method = "post">#}
+{#    {% csrf_token %}#}
+{#    {{form }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+{%endblock content%}

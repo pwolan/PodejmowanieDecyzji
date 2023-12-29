@@ -1,0 +1,23 @@
+{% load index %}
+
+<div class="decision-grid" style="display: grid; grid-template-columns: repeat({{ alternatives|length }},140px);">
+    {% for alt1 in alternatives %}
+        {% for alt2 in alternatives %}
+            {% if forloop.parentloop.counter0 < forloop.counter0 %}
+                <div class="decision-grid-element">
+                    <div>
+                        <div>{{ alt1.name }}</div>
+                        {% with alt1.id|make_id:alt2.id as field_id %}
+                            {{ form|lookup:field_id }}
+                        {% endwith %}
+                        <div>{{ alt2.name }}</div>
+                    </div>
+                </div>
+            {% else  %}
+                <div class="decision-grid-element" style="background-color:#ccc;">
+                </div>
+            {% endif %}
+
+        {% endfor %}
+    {% endfor %}
+</div>

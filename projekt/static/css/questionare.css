@@ -1,0 +1,23 @@
+.decision-grid{}
+.decision-grid-element{
+    width: 140px;
+    height: 140px;
+    background-color: yellow;
+}
+.decision-grid-element > div {
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.decision-grid-element > div > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.decision-grid-element:has(select.exists){
+    background-color: limegreen;
+}

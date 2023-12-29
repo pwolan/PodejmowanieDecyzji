@@ -1,6 +1,9 @@
 from django import forms
+from django.db import transaction
 from django.forms.utils import ErrorList
-from ..models.models import Models, Criterias, Alternatives, ModelScales, Scales
+
+from ..models import DataMatrices, Matrices, MatriceElements
+from ..models.models import Models, Criterias, Alternatives, ModelScales, Scales, Experts
 from ..models.models import Models, ModelCriterias
 from ..models.decisionScenarios import DecisionScenarios
 from django.contrib.auth.forms import UserCreationForm
@@ -62,17 +65,52 @@ class JoinScenarioForm(forms.Form):
 class AlternativeDecisionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        criterias = kwargs.pop("criterias")
-        prefix = kwargs.pop("prefix")
-        model = kwargs.pop("model")
+        self.criterias = kwargs.pop("criterias")
+        self.user = kwargs.pop("user")
+        self.parent = kwargs.pop("parent")
+        self.model = kwargs.pop("model")
+        self.size = len(self.criterias)
+        scales = Scales.objects.filter(modelscales__modelID=self.model)
+        choices = [(s.value, s.description + " niż") for s in scales]
+        expert = Experts.objects.get(user_id=self.user)
+        # adding matrices
+        matrix, _ = Matrices.objects.update_or_create(criteriaID=self.parent, expertID=expert, size=self.size)
+        decisionscenario = DecisionScenarios.objects.get(modelID=self.model)
+        dataMatrix, _ = DataMatrices.objects.update_or_create(dataID=decisionscenario, matrixID=matrix)
 
-        scales = Scales.objects.filter(modelscales__modelID=model)
-        choices = [(s.value, s.description) for s in scales]
-        # print(choices)
         super().__init__(*args, **kwargs)
-        for criterium in criterias:
-            # print(criterium)
-            # self.fields[prefix+"_"+str(criterium['id'])] = forms.DecimalField(label="")
-            self.fields[prefix+"_"+str(criterium['id'])] = forms.ChoiceField(label="", choices=choices)
-    def save(self):
-        pass
+        for x,cr1 in enumerate(self.criterias):
+            for y,cr2 in enumerate(self.criterias):
+                if cr1['id'] < cr2['id']:
+                    el_exists = MatriceElements.objects.filter(matrixID=matrix, x=x, y=y).exists()
+                    initial = None
+                    if el_exists:
+                        initial = MatriceElements.objects.get(matrixID=matrix, x=x, y=y).value
+                        widget = forms.Select(attrs={'class': 'exists'})
+                    else:
+                        initial = choices[len(choices)//2]
+                        widget = forms.Select()
+                    self.fields[self._get_field_name(cr1,cr2)] = forms.ChoiceField(label="", choices=choices, initial=initial, widget=widget)
+
+    def save(self, user, parent):
+        print("SAVING OR UPDATING")
+
+        with transaction.atomic(): # tranzakcja, żeby wszystko na raz się zapisało albo nic
+            expert = Experts.objects.get(user_id=user)
+            # adding matrices
+            matrix,_ = Matrices.objects.update_or_create(criteriaID=parent, expertID=expert,size=self.size)
+            decisionscenario = DecisionScenarios.objects.get(modelID=self.model)
+            dataMatrix,_ = DataMatrices.objects.update_or_create(dataID=decisionscenario, matrixID=matrix)
+            for x,cr1 in enumerate(self.criterias):
+                for y,cr2 in enumerate(self.criterias):
+                    if cr1['id'] < cr2['id']:
+                        MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, defaults={"value":self._get_field_value(cr1,cr2)})
+                    elif cr1['id'] == cr2['id']:
+                        MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, value=1)
+                    else:
+                        MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, defaults={"value":self._get_field_value(cr2,cr1)})
+    def _get_field_name(self, id1,id2):
+        return "_" + str(id1['id']) + "-" + str(id2['id'])
+
+    def _get_field_value(self, id1,id2):
+        return self.cleaned_data.get(self._get_field_name(id1,id2))
