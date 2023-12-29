@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as django_auth_views
 from .views.auth_views import MyLoginView, MyRegisterView
-from .views.facilitator.criterias import CreateCriteriaView
+from .views.facilitator.criterias import CreateCriteriaView, DeleteCriteriaView
 from .views.facilitator.scenario import ScenarioView, CreateScenarioView, ScenarioDetailView, ScenarioSubmitView, ScenarioEndView, generate_json
 from .views.facilitator.alternatives import CreateAlternativesView
 from .views.expert.index import QuestionareView,AlternativesDecisionView,QuestionareCriteriumView
@@ -18,6 +18,7 @@ new_urls = [
     path('scenarios/view/<pk>', ScenarioDetailView.as_view(), name='scenario-detail'),
     path('scenarios/view/<pk>/generate_json_file', generate_json, name='generate_json_file'),
     path('scenarios/<pk>/criterias/modify', CreateCriteriaView.as_view(), name='modify-criteria'),
+    path('scenarios/<scenarioId>/criterias/modify/<pk>/delete', DeleteCriteriaView.as_view(), name='delete-criteria'),
     path('scenarios/<pk>/alternatives/modify', CreateAlternativesView.as_view(), name='modify-alternatives'),
     path('scenarios/<pk>/submit', ScenarioSubmitView.as_view(), name='scenario-submit'),
     path('scenarios/<pk>/end', ScenarioEndView.as_view(), name='scenario-end'),

@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView, DetailView
 
-from projekt.forms.forms import CriteriasForms
+from projekt.forms.forms import CriteriasForms, CriteriasDeleteForm
 from projekt.models import Criterias, DecisionScenarios, ModelCriterias, Scales
 
 
@@ -39,3 +39,14 @@ class CreateCriteriaView(LoginRequiredMixin, CreateView):
         context['criterias'] = rootCriterion.criteriaID
         context['scenario'] = scenario
         return context
+
+class DeleteCriteriaView(LoginRequiredMixin, DeleteView):
+    model = Criterias
+
+    template_name = 'scenario/scenario_delete_criteria.html'
+
+    def form_valid(self, form):
+        model = Criterias.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('modify-criteria', kwargs={'pk': self.kwargs['scenarioId']})

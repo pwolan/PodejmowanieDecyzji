@@ -1,7 +1,7 @@
 {% load criterium_tag %}
 <div class="criteria-block" >
     {% for child in children %}
-    <div> ID: {{child.id}}, Parent: {{ child.parent_criterion }}, Name: {{ child.name }}, Description: {{ child.description }}</div>
+    <div> ID: {{child.id}}, Parent: {{ child.parent_criterion }}, Name: {{ child.name }}, Description: {{ child.description }}{% if to_delete == True %}<a href={% url 'delete-criteria' scenario_id child.id%}> usun</a>{% endif %}</div>
         {% if child.children.count > 0 %}
              {% criterium_tag child %}
         {% endif %}

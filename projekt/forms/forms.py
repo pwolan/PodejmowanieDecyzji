@@ -23,6 +23,15 @@ class CriteriasForms(forms.ModelForm):
         q = kwargs.pop("form_q")
         super(CriteriasForms, self).__init__(**kwargs)
         self.fields['parent_criterion'] = forms.ModelChoiceField(queryset=q)
+        
+class CriteriasDeleteForm(forms.ModelForm):
+    class Meta:
+        model = Criterias
+        fields = ['name']
+    def __init__(self, **kwargs):
+        q = kwargs.pop("form_q")
+        super(CriteriasDeleteForm, self).__init__(**kwargs)
+        self.fields['name'] = forms.ModelChoiceField(queryset=q)
 
 
 class AlternativesForm(forms.ModelForm):

@@ -31,14 +31,15 @@
             <h2> Alternatives:</h2>
     <ul style="font-size: 18px; margin: 18px 18px">
         {% for alternative in alternatives %}
-            <li>{{ alternative.pk }} - Name: {{ alternative.name }} &nbsp;</li>
+            <li>{{ alternative.pk }} - Name: {{ alternative.name }}&nbsp;</li>
             <div>Description: {{ alternative.description}} &nbsp;</div>
         {% endfor %}
     </ul>
         </div>
     {% else%}
         <ol>
-            <li>Definiowanie i modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
+            <li>Modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
+{#            <li>Usuwanie kryterii i podkryterii <a href={% url 'delete-criteria' object.id %}>Usuń kryteria</a></li>#}
             <li>Dodawanie elementów do porównania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
             <li>Zatwierdź scenariusz <a href={% url 'scenario-submit' object.id%}>Zatwierdź</a></li>
         </ol>

@@ -7,7 +7,7 @@
     <a href={% url 'scenarios'%}>SCENARIOS</a>
     <a href={% url 'scenario-detail' scenario.pk %}>SCENARIO-DETAIL</a>
 </div>
-{% criterium_tag criterias %}
+{% criterium_tag criterias True scenario.pk %}
 <form action = "" method = "post">
     {% csrf_token %}
     {{form }}
