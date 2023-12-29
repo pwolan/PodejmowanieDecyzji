@@ -1,0 +1,38 @@
+{
+    "decision_scenario_id": 9,
+    "model_id": 10,
+    "model": {
+        "alternatives": [],
+        "criteria": [
+            {
+                "id": 18,
+                "parent_criterion": null,
+                "name": "Root",
+                "description": "Root Criterion"
+            }
+        ],
+        "experts": [
+            {
+                "id": 2,
+                "name": "stefan",
+                "address": "address"
+            },
+            {
+                "id": 3,
+                "name": "expert",
+                "address": "address"
+            },
+            {
+                "id": 4,
+                "name": "expert2",
+                "address": "address"
+            }
+        ],
+        "ranking_method": "EVM",
+        "aggregation_method": "AIP",
+        "completeness_required": false,
+        "scale": []
+    },
+    "data": [],
+    "weights": {}
+}
