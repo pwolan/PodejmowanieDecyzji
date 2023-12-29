@@ -13,4 +13,10 @@
             {% endfor %}
         </ul>
         <h3>{{ progress }}</h3>
+        {% if ended and not done %}
+        	<a href={% url 'questionare-end' url %}>Zakończ Ankiete</a>
+        {% elif done %}
+            <h2>Ankieta Zakończona. Dziękujemy!</h2>
+        {% endif %}
+
 {%endblock content%}

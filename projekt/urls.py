@@ -3,10 +3,12 @@ from django.contrib.auth import views as django_auth_views
 from .views.auth_views import MyLoginView, MyRegisterView
 from .views.facilitator.criterias import CreateCriteriaView, DeleteCriteriaView
 from .views.facilitator.scenario import ScenarioView, CreateScenarioView, ScenarioDetailView, ScenarioSubmitView, ScenarioEndView, generate_json
-from .views.facilitator.alternatives import CreateAlternativesView
-from .views.expert.index import QuestionareView, QuestionareCriteriumView
+from .views.facilitator.alternatives import CreateAlternativesView, DeleteAlternativesView
+from .views.expert.index import QuestionareView, QuestionareCriteriumView, QuestionareEndView
 from .views.expert.panel import ExpertPanel
 from .views import index as views
+
+
 
 new_urls = [
     path("", views.index, name="index"),
@@ -25,6 +27,7 @@ new_urls = [
     path('scenarios/<pk>/end', ScenarioEndView.as_view(), name='scenario-end'),
     path('panel/', ExpertPanel.as_view(), name='expert-panel'),
     path('questionare/<str:url>', QuestionareView.as_view(), name='questionare'),
-    path('questionare/<str:url>/<pk>', QuestionareCriteriumView.as_view(), name='questionare-criterium'),
+    path('questionare/end/<str:url>', QuestionareEndView.as_view(), name='questionare-end'),
+    path('questionare/<url>/<pk>', QuestionareCriteriumView.as_view(), name='questionare-criterium'),
 ]
 urlpatterns = new_urls

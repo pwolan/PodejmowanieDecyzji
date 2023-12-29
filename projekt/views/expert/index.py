@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, RedirectView
 
 from projekt.forms.forms import AlternativeDecisionForm
-from projekt.models import DecisionScenarios, Models, Alternatives, Criterias, Matrices, DataMatrices
+from projekt.models import DecisionScenarios, Models, Alternatives, Criterias, Matrices, DataMatrices, ModelExperts
 from projekt.methods_matrices import make_decision_tree
 import pdb
 
@@ -25,8 +25,22 @@ class QuestionareView(TemplateView):
         matrices = DataMatrices.objects.filter(dataID=scenario)
         completed = len(matrices)
         context['progress'] = f"Uzupełniono {completed}/{len(tree)}"
-
+        context['ended'] = completed == len(tree)
+        context['done']  = ModelExperts.objects.get(expertID__user=self.request.user, modelID__decisionscenarios__url=self.kwargs['url']).done
         return context
+
+class QuestionareEndView(LoginRequiredMixin, RedirectView):
+
+    permanent = False
+    query_string = True
+    pattern_name = "questionare"
+    # TODO Panie Bison tutej jak się wciśnie to się to odpala
+    def get(self, request, *args, **kwargs):
+        me = ModelExperts.objects.filter(expertID__user=request.user, modelID__decisionscenarios__url=self.kwargs['url'])
+        if me.exists():
+            me.update(done=1)
+        return super().get(request, *args, **kwargs)
+
 
 
 class QuestionareCriteriumView(LoginRequiredMixin,FormView):
