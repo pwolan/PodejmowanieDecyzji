@@ -97,10 +97,10 @@ def generate_json_file(decisionScenario: DecisionScenarios):
     data["data"] = [{"id": ""} for matrice in matrices]
     data["weights"] = [{"criterion_id": weight.criteriaID.pk, "w": []} for weight in weights]
     print(data)
-    name = "decisionScenario_" + str(decisionScenario.pk) + ".json"
-    with open(name, "w") as json_file:
-        json.dump(data, json_file, indent=4)
-    return name
+    # name = "decisionScenario_" + str(decisionScenario.pk) + ".json"
+    # with open(name, "w") as json_file:
+    #     json.dump(data, json_file, indent=4)
+    return data
 #TESTY
 # print(geometric_mean([]))
 # print(geometric_mean([1]))

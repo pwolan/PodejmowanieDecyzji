@@ -113,7 +113,5 @@ class ScenarioEndView(FormView):
         return context
 def generate_json(request, pk):
     scenario = get_object_or_404(DecisionScenarios, pk=pk)
-    name = generate_json_file(scenario)
-    with open(f'{name}', 'r') as f:
-        data = json.load(f)
+    data = generate_json_file(scenario)
     return JsonResponse(data)
