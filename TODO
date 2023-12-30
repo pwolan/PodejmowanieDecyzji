@@ -1,30 +1,11 @@
 1. Tworzenie scenariusza:
-- ustawić ranking method i aggregation method na wybieranie z możliwych, a nie wpisywanie ręczne #DONE
-2. Modyfikowanie scenariusza:
-- opis alternatyw, kryteriów wyświetlany na ekranie #DONE
-- Dodanie skali (na razie jednej dla wszystkich, później można wybierać ze stworzonych wcześniej) #DONE
-- Po zatwierdzeniu scenariusza wypisać informację ilu jest ekspertów/ilu zakończyło #DONE
-- po potwierdzeniu nie widać drzewka kryteriów/ alternatyw #DONE
-- przycisk USUŃ dla kryteriów i alternatyw (opcjonalne) # DONE
-- zakaz zatwierdzenia pustych scenariuszy (opcjonalne)
-- dać przycisk do zakończenia pracy ekspertów (opcjonalne) #DONE
-3. Plik JSON:
-- Generacja pliku JSON
-- Przycisk przy scenariuszu dla facylitatora do generacji takiego pliku
-4. Panel Eksperta:
-- zmienić tekst w panelu eksperta #DONE
-- każde kryterium dostaje własną macierz do wypełnienia #IN-PROGRESS
-- dodanie/zmiana adresu eksperta
-- zatwierdzenie przez eksperta przed wypełnieniem kompletnym (opcjonalne)
-5. Macierz eksperta:
-- skala wzięta z project_scales #DONE
-- tylko jeden output na parę #DONE
-- opis alternatyw, kryteriów wyświetlany na ekranie #DONE
-
-6. Liczenie wyników:
-- tworzenie drzewa kryteriów #DONE
-- liczenie macierzy wynikowej
-- umieszczanie ich w odpowiednim miejscu
-- przycisk do uruchomienia wyliczania wyników (od strony facylitatora)
-7. Baza danych:
-- wyczyścić bazę danych(aby modelsID zgadzało się z decisionscenarioID) // może relacja one-to-one?
+- dodawanie własnej skali(z predefiniowanych lub od zera) - zmienić przy tworzeniu scenariusza (dodaje aktualnie wszystko co jest w Scales)
+- co robimy gdy completeness_required=false
+- dodanie różnych metod oprócz GMM, AIP (bardzo opcjonalne)
+2. Panel Eksperta:
+- hasło do kodu dla eksperta NIE DZIAŁA
+- zatwierdzenie przez eksperta przed wypełnieniem kompletnym - potrzebne tylko, gdy będziemy robić completeness_required=false (opcjonalne)
+3. Liczenie wyników:
+- liczenie macierzy wynikowej (printowanie na ekranie lub stworzenie nowego modelu w database (lepsze to pierwsze) - dodanie nowego przycisku) calculate wait and decision tree
+4. Baza danych:
+- wyczyścić bazę danych (do azure i przed wysłaniem - można stworzyć jednego superusera przed wysłaniem)

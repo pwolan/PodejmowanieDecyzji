@@ -1,0 +1,24 @@
+{%extends 'base.html' %}
+{%block content%}
+<div>
+    <a href={% url 'index'%}>HOME</a>
+    <a href={% url 'scenarios'%}>SCENARIOS</a>
+    <a href={% url 'scenario-detail' scenario.pk %}>SCENARIO-DETAIL</a>
+</div>
+<div>
+    <style>
+        dt{
+          text-align: center;
+          font-size: 30px;
+          {% comment %} column-count: 2; /* liczba kolumn */ {% endcomment %}
+          column-gap: 15px; /* odstęp między kolumnami */
+          background-color: #FFFFD0;
+        }
+      </style>
+    <dl>
+        {% for name, value in vector %}
+        <dt>Nazwa: {{ name }}, Wynik: {{ value }}</dt>
+        {% endfor %}
+    </dl>
+</div>
+{%endblock content%}

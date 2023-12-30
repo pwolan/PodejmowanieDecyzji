@@ -16,7 +16,6 @@ class CreateAlternativesView(LoginRequiredMixin, CreateView):
         model = scenario.modelID
         context['alternatives'] = Alternatives.objects.filter(modelalternatives__modelID=model)
         context['scenario'] = scenario
-        print(context['alternatives'])
         return context
     def get_success_url(self):
         return reverse_lazy('modify-alternatives', kwargs={'pk': self.kwargs['pk']})

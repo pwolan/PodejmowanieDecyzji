@@ -18,10 +18,11 @@
         <div>Scenariusz został zatwierdzony! Kod:
            <span style="color: red;">{{ link }}</span>
         </div>
-        <div>Formularz ukończyło: <span>{{ fractional_experts }}</span> ekspertów. {% if not object.completed%}{% if frac == 0%}<a href={% url 'scenario-end' object.id%}>Ukończ ankietę</a>{%endif%}{%else%}Ankieta ukończona{%endif%}
+        <div>Formularz ukończyło: <span>{{ fractional_experts }}</span> ekspertów. {% if not object.completed%}{% if frac == 0 and all_experts >= 1%}<a href={% url 'scenario-end' object.id%}>Ukończ ankietę</a>{%endif%}{%else%}Ankieta ukończona{%endif%}
         </div>
         {% if object.completed%}
         <div><a href="{% url 'generate_json_file' scenario.pk %}">Pobierz wyniki</a></div>
+        <div><a href="{% url 'show-result' scenario.pk %}">Pokaż macierz wynikową</a></div>
         {% endif%}
         <div>
             <h2> Criterias:</h2>
@@ -40,8 +41,10 @@
         <ol>
             <li>Modyfikowanie kryterii i podkryterii <a href={% url 'modify-criteria' object.id %}>Zmień kryteria</a></li>
 {#            <li>Usuwanie kryterii i podkryterii <a href={% url 'delete-criteria' object.id %}>Usuń kryteria</a></li>#}
-            <li>Dodawanie elementów do porównania <a href={% url 'modify-alternatives' object.id %}>Dodaj elementy</a></li>
+            <li>Modyfikowanie alternatyw <a href={% url 'modify-alternatives' object.id %}>Zmień alternatywy</a></li>
+            {% if size_alternatives >= 2%}
             <li>Zatwierdź scenariusz <a href={% url 'scenario-submit' object.id%}>Zatwierdź</a></li>
+            {% endif %}
         </ol>
     {% endif %}
 

@@ -50,7 +50,7 @@ class EndScenarioForm(forms.Form):
 class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "password1", "password2")
+        fields = ("username", "email", "password1", "password2")
 
 def validate_url(url):
     if not DecisionScenarios.objects.filter(url=url).exists():
@@ -71,7 +71,7 @@ class AlternativeDecisionForm(forms.Form):
         self.model = kwargs.pop("model")
         self.size = len(self.criterias)
         scales = Scales.objects.filter(modelscales__modelID=self.model)
-        choices = [(s.value, s.description + " niż") for s in scales]
+        choices = [(s.value, s.description) for s in scales]
         expert = Experts.objects.get(user_id=self.user)
         # adding matrices
         matrix, _ = Matrices.objects.update_or_create(criteriaID=self.parent, expertID=expert, size=self.size)
@@ -93,7 +93,7 @@ class AlternativeDecisionForm(forms.Form):
                     self.fields[self._get_field_name(cr1,cr2)] = forms.ChoiceField(label="", choices=choices, initial=initial, widget=widget)
 
     def save(self, user, parent):
-        print("SAVING OR UPDATING")
+        # print("SAVING OR UPDATING")
 
         with transaction.atomic(): # tranzakcja, żeby wszystko na raz się zapisało albo nic
             expert = Experts.objects.get(user_id=user)

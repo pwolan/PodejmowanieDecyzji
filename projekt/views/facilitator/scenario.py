@@ -7,9 +7,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, FormView
 
 from projekt.forms.forms import ModelForms, SubmitScenarioForm, EndScenarioForm
-from projekt.models import DecisionScenarios, Models, Criterias, ModelCriterias, ModelExperts, Alternatives, ModelScales, Scales
+from projekt.models import DecisionScenarios, Models, Criterias, ModelCriterias, ModelExperts, Alternatives, ModelScales, Scales, ScenarioWeights
 from django.contrib.auth.hashers import make_password
-from projekt.methods_matrices import make_decision_tree, generate_json_file
+from projekt.methods_matrices import make_decision_tree, generate_json_file, calculate_weights, get_values
 
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -53,19 +53,30 @@ class ScenarioDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         scenario = DecisionScenarios.objects.get(pk=self.kwargs.get('pk'))
         model = scenario.modelID
-        result = DecisionScenarios.objects.aggregate(Max('dataID'))
-        if not type(result['dataID__max']) == int:
-            result['dataID__max'] = 0
+
+        data_value = DecisionScenarios.objects.aggregate(Max('dataID'))
+        if not type(data_value['dataID__max']) == int:
+            data_value['dataID__max'] = 0
         if type(scenario.dataID) != int:
-            scenario.dataID = result['dataID__max'] + 1
-            scenario.save()
+            scenario.dataID = data_value['dataID__max'] + 1
+
+        weight_value = DecisionScenarios.objects.aggregate(Max('weightID'))
+        if not type(weight_value['weightID__max']) == int:
+            weight_value['weightID__max'] = 0
+        if type(scenario.weightID) != int:
+            scenario.weightID = weight_value['weightID__max'] + 1
+
+        scenario.save()
+
         context['completeness_required'] = model.completeness_required
         context['ranking_method'] = model.ranking_method
         context['aggregation_method'] = model.aggregation_method
+        context['size_alternatives'] = len(Alternatives.objects.filter(modelalternatives__modelID=model))
         if scenario.submited:
             all_experts = len(ModelExperts.objects.filter(modelID=model))
             done_experts = len(ModelExperts.objects.filter(modelID=model).filter(done=True))
             context['frac'] = done_experts - all_experts
+            context['all_experts'] = all_experts
             context['fractional_experts'] = f'{done_experts} / {all_experts}'
             context['alternatives'] = Alternatives.objects.filter(modelalternatives__modelID=model)
             my_objects = ModelCriterias.objects.filter(modelID=model.pk)
@@ -76,6 +87,19 @@ class ScenarioDetailView(LoginRequiredMixin, DetailView):
         make_decision_tree(scenario)
         return context
 
+
+class ShowResultView(LoginRequiredMixin, DetailView):
+    model = DecisionScenarios
+    template_name = "scenario/show_result.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        scenario = DecisionScenarios.objects.get(pk=self.kwargs.get('pk'))
+        context['scenario'] = scenario
+        alternatives = Alternatives.objects.filter(modelalternatives__modelID = scenario.modelID.pk).values_list()
+        values = get_values(scenario)
+        context['vector'] = [[alternatives[i][0], values[i]] for i in range(len(alternatives))]
+        return context
 
 class ScenarioSubmitView(FormView):
     template_name = "scenario/scenario_submit.html"
@@ -104,6 +128,9 @@ class ScenarioEndView(FormView):
     def form_valid(self, form):
         scenario = DecisionScenarios.objects.get(pk=self.kwargs['pk'])
         scenario.completed = True
+
+        calculate_weights(scenario)
+
         scenario.save()
         return super().form_valid(form)
     def get_context_data(self, **kwargs):
@@ -111,7 +138,8 @@ class ScenarioEndView(FormView):
         scenario = DecisionScenarios.objects.get(pk=self.kwargs.get('pk'))
         context['scenario'] = scenario
         return context
+
 def generate_json(request, pk):
     scenario = get_object_or_404(DecisionScenarios, pk=pk)
     data = generate_json_file(scenario)
-    return JsonResponse(data)
+    return JsonResponse(data, json_dumps_params={'indent': 8, 'ensure_ascii': False})

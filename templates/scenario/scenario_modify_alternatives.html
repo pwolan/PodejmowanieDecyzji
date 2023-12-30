@@ -11,7 +11,7 @@
         {% for alternative in alternatives %}
             <li>{{ alternative.pk }} - Name: {{ alternative.name }} &nbsp;</li>
             <div>Description: {{ alternative.description}} &nbsp;</div>
-            <div><a href={% url 'delete-alternatives' scenario.pk alternative.pk%}>usun</a></div>
+            <div><a href={% url 'delete-alternatives' scenario.pk alternative.pk%}>Usuń</a></div>
         {% endfor %}
     </ul>
 <form action = "" method = "post">

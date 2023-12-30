@@ -5,11 +5,11 @@
     <a href={% url 'index'%}>HOME</a>
     <a href={% url 'expert-panel'%}>EXPERT PANEL</a>
 </div>
-    Witaj! Zapraszam do ankietki :) <3 <3 <3
+    Witaj! Zapraszam do ankiety :) 
 
         <ul>
             {% for t in tree %}
-                <li><a href="{{t.link}}">{{t.id}}</a></li>
+                <li><a href="{{t.link}}">{{t.id}}: {{t.name}}</a></li>
             {% endfor %}
         </ul>
         <h3>{{ progress }}</h3>

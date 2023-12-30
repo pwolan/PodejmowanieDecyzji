@@ -19,10 +19,11 @@ class QuestionareView(TemplateView):
         tree = make_decision_tree(scenario)
         context['tree'] = [{
                 "id": t[0], 
-                "link": reverse('questionare-criterium', args=[self.kwargs['url'], t[0]])
+                "link": reverse('questionare-criterium', args=[self.kwargs['url'], t[0]]),
+                "name": Criterias.objects.get(pk=t[0]).name
             } for t in tree]
         context['url'] = self.kwargs['url']
-        matrices = DataMatrices.objects.filter(dataID=scenario)
+        matrices = Matrices.objects.filter(expertID__user=self.request.user, datamatrices__dataID=scenario)
         completed = len(matrices)
         context['progress'] = f"Uzupełniono {completed}/{len(tree)}"
         context['ended'] = completed == len(tree)
@@ -34,7 +35,6 @@ class QuestionareEndView(LoginRequiredMixin, RedirectView):
     permanent = False
     query_string = True
     pattern_name = "questionare"
-    # TODO Panie Bison tutej jak się wciśnie to się to odpala
     def get(self, request, *args, **kwargs):
         me = ModelExperts.objects.filter(expertID__user=request.user, modelID__decisionscenarios__url=self.kwargs['url'])
         if me.exists():

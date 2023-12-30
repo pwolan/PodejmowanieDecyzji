@@ -28,7 +28,6 @@ class ExpertPanel(FormView):
         modelID = Models.objects.get(id=DecisionScenarios.objects.get(url=url).modelID_id)
     
         scenario = DecisionScenarios.objects.get(modelID=modelID) 
-        print(scenario)
         if not ModelExperts.objects.filter(expertID=expertID, modelID=modelID).exists() and not scenario.completed:
             connection = ModelExperts.objects.create(modelID=modelID, expertID=expertID)
             connection.save()

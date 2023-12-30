@@ -34,6 +34,6 @@ class MyRegisterView(FormView):
         print("FORM VALID")
         user = form.save()
         print(user)
-        expert = Experts(user=user, name=user.username, address="address")
+        expert = Experts(user=user, name=user.username, address=user.email)
         expert.save()
         return super().form_valid(form)
