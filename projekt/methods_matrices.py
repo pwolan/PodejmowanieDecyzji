@@ -100,6 +100,7 @@ def generate_json_file(decisionScenario: DecisionScenarios):
     name = "decisionScenario_" + str(decisionScenario.pk) + ".json"
     with open(name, "w") as json_file:
         json.dump(data, json_file, indent=4)
+    return name
 #TESTY
 # print(geometric_mean([]))
 # print(geometric_mean([1]))

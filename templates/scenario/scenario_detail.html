@@ -21,7 +21,7 @@
         <div>Formularz ukończyło: <span>{{ fractional_experts }}</span> ekspertów. {% if not object.completed%}{% if frac == 0%}<a href={% url 'scenario-end' object.id%}>Ukończ ankietę</a>{%endif%}{%else%}Ankieta ukończona{%endif%}
         </div>
         {% if object.completed%}
-        <div><a href="{% url 'generate_json_file' scenario.pk %}">Generuj Dajsona</a></div>
+        <div><a href="{% url 'generate_json_file' scenario.pk %}">Pobierz wyniki</a></div>
         {% endif%}
         <div>
             <h2> Criterias:</h2>

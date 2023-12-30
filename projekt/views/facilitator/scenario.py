@@ -1,4 +1,5 @@
 import uuid
+import json
 
 from django.db.models import Max
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -10,7 +11,7 @@ from projekt.models import DecisionScenarios, Models, Criterias, ModelCriterias,
 from django.contrib.auth.hashers import make_password
 from projekt.methods_matrices import make_decision_tree, generate_json_file
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 
 class ScenarioView(LoginRequiredMixin,  ListView):
@@ -112,5 +113,7 @@ class ScenarioEndView(FormView):
         return context
 def generate_json(request, pk):
     scenario = get_object_or_404(DecisionScenarios, pk=pk)
-    generate_json_file(scenario)
-    return HttpResponse("Plik JSON został wygenerowany.")
+    name = generate_json_file(scenario)
+    with open(f'{name}', 'r') as f:
+        data = json.load(f)
+    return JsonResponse(data)
