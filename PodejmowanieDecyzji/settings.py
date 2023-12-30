@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-48#n64l+6eu80yc&m0sjxbl*@(pm)m3y1a0s*mcezb+ubxiw3y
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','20.215.12.1','podejmujdecyzje.azurewebsites.net', 'www.podejmujdecyzje.azurewebsites.net']
-# CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
 
 # Application definition
 
