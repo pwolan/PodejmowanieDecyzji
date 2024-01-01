@@ -43,9 +43,11 @@ class AlternativesForm(forms.ModelForm):
         fields = ["name", "description"]
 
 class SubmitScenarioForm(forms.Form):
-    password = forms.CharField(label="Password (If not set, password not used)", required=False)
+    # password = forms.CharField(label="Password (If not set, password not used)", required=False)
+    hidden = forms.HiddenInput()
 class EndScenarioForm(forms.Form):
-    password = forms.CharField(label="Password (If not set, password not used)", required=False)
+    # password = forms.CharField(label="Password (If not set, password not used)", required=False)
+    hidden = forms.HiddenInput()
 
 class RegisterUserForm(UserCreationForm):
     class Meta:
@@ -108,9 +110,12 @@ class AlternativeDecisionForm(forms.Form):
                     elif cr1['id'] == cr2['id']:
                         MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, value=1)
                     else:
-                        MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, defaults={"value":self._get_field_value(cr2,cr1)})
+                        MatriceElements.objects.update_or_create(matrixID=matrix, x=x, y=y, defaults={"value": self._get_field_value_inv(cr2,cr1)})
     def _get_field_name(self, id1,id2):
         return "_" + str(id1['id']) + "-" + str(id2['id'])
 
     def _get_field_value(self, id1,id2):
         return self.cleaned_data.get(self._get_field_name(id1,id2))
+
+    def _get_field_value_inv(self, id1, id2):
+        return 1/float(self.cleaned_data.get(self._get_field_name(id1, id2)))

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-48#n64l+6eu80yc&m0sjxbl*@(pm)m3y1a0s*mcezb+ubxiw3y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','20.215.12.1','podejmujdecyzje.azurewebsites.net', 'www.podejmujdecyzje.azurewebsites.net']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','20.215.12.1','podejmujdecyzje.azurewebsites.net', 'www.podejmujdecyzje.azurewebsites.net']
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if os.environ['WEBSITE_HOSTNAME'] else ['127.0.0.1']
 CSRF_TRUSTED_ORIGINS = []
 if 'WEBSITE_HOSTNAME' in os.environ:
