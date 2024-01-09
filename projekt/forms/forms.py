@@ -26,6 +26,7 @@ class CriteriasForms(forms.ModelForm):
         q = kwargs.pop("form_q")
         super(CriteriasForms, self).__init__(**kwargs)
         self.fields['parent_criterion'] = forms.ModelChoiceField(queryset=q)
+        self.fields['parent_criterion'].label_from_instance = lambda obj: f'ID: {obj.id}; Name: {obj.name}'
         
 class CriteriasDeleteForm(forms.ModelForm):
     class Meta:
